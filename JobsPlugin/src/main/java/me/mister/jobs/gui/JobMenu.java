@@ -17,40 +17,44 @@ public class JobMenu {
 
     public Inventory getMenu(Player p) {
 
-        Inventory inv = Bukkit.createInventory(null, 27, "§6§lMenu des Métiers");
+        Inventory inv = Bukkit.createInventory(null, 36, "§b§lMétiers disponibles");
 
         Job active = JobsPlugin.getInstance().getJobManager().getJob(p);
 
-        // Fond décoratif
-        ItemStack glass = new ItemStack(Material.ORANGE_STAINED_GLASS_PANE);
+        // Fond moderne bleu/cyan
+        ItemStack glass = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
         ItemMeta gMeta = glass.getItemMeta();
         gMeta.setDisplayName(" ");
         glass.setItemMeta(gMeta);
 
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < 36; i++) {
             inv.setItem(i, glass);
         }
 
-        // Livre du créateur
-        ItemStack book = new ItemStack(Material.BOOK);
+        // Livre du créateur (slot 4)
+        ItemStack book = new ItemStack(Material.WRITABLE_BOOK);
         ItemMeta bMeta = book.getItemMeta();
-        bMeta.setDisplayName("§e§lÀ propos du plugin");
+        bMeta.setDisplayName("§b§lÀ propos du plugin");
         bMeta.setLore(Arrays.asList(
-                "§7Créé par : §6§lTMD_Mister",
-                " ",
-                "§fPlugin de métiers complet",
-                "§favec niveaux, XP et bonus.",
-                " ",
-                "§eMerci d'utiliser ce plugin !"
+                "§7Créé par : §3§lTMD_Mister",
+                "",
+                "§fPlugin de métiers moderne",
+                "§favec XP, niveaux et GUI stylé.",
+                "",
+                "§bMerci d'utiliser ce plugin !"
         ));
         book.setItemMeta(bMeta);
+        inv.setItem(4, book);
 
-        inv.setItem(4, book); // Centre en haut
+        // On remet les slots des métiers à vide pour éviter le bug
+        inv.setItem(11, null);
+        inv.setItem(13, null);
+        inv.setItem(15, null);
 
         // MINEUR
-        ItemStack mineur = new ItemStack(Material.IRON_PICKAXE);
+        ItemStack mineur = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta mMeta = mineur.getItemMeta();
-        mMeta.setDisplayName("§eMineur");
+        mMeta.setDisplayName("§bMineur");
         mMeta.setLore(Arrays.asList(
                 "§7Casse des minerais et pierres",
                 "§7pour gagner de l'XP.",
@@ -67,9 +71,9 @@ public class JobMenu {
         inv.setItem(11, mineur);
 
         // BUCHERON
-        ItemStack bucheron = new ItemStack(Material.IRON_AXE);
+        ItemStack bucheron = new ItemStack(Material.DIAMOND_AXE);
         ItemMeta buMeta = bucheron.getItemMeta();
-        buMeta.setDisplayName("§eBûcheron");
+        buMeta.setDisplayName("§bBûcheron");
         buMeta.setLore(Arrays.asList(
                 "§7Coupe des arbres",
                 "§7pour gagner de l'XP.",
@@ -86,9 +90,9 @@ public class JobMenu {
         inv.setItem(13, bucheron);
 
         // FERMIER
-        ItemStack fermier = new ItemStack(Material.IRON_HOE);
+        ItemStack fermier = new ItemStack(Material.DIAMOND_HOE);
         ItemMeta fMeta = fermier.getItemMeta();
-        fMeta.setDisplayName("§eFermier");
+        fMeta.setDisplayName("§bFermier");
         fMeta.setLore(Arrays.asList(
                 "§7Récolte des cultures",
                 "§7pour gagner de l'XP.",
