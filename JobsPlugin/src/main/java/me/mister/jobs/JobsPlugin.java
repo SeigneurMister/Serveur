@@ -1,23 +1,29 @@
 package me.mister.jobs;
 
-import me.mister.jobs.commands.JobCommand;
-import me.mister.jobs.listeners.JobListener;
-import me.mister.jobs.listeners.MenuListener;
+import me.mister.jobs.commands.JobHelpCommand;
+import me.mister.jobs.commands.JobStatsCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JobsPlugin extends JavaPlugin {
+
+    private static JobsPlugin instance;
     private JobManager jobManager;
 
     @Override
     public void onEnable() {
-        jobManager = new JobManager(this);
+        instance = this;
+        jobManager = new JobManager();
 
-        getCommand("job").setExecutor(new JobCommand(jobManager));
-
-        getServer().getPluginManager().registerEvents(new JobListener(jobManager), this);
-        getServer().getPluginManager().registerEvents(new MenuListener(jobManager), this);
+        // Commandes
+        getCommand("job").setExecutor(new JobCommand());
+        getCommand("jobstats").setExecutor(new JobStatsCommand(jobManager));
+        getCommand("jobhelp").setExecutor(new JobHelpCommand());
 
         getLogger().info("JobsPlugin activé !");
+    }
+
+    public static JobsPlugin getInstance() {
+        return instance;
     }
 
     public JobManager getJobManager() {

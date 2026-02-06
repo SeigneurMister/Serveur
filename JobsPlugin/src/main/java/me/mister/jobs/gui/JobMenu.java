@@ -1,30 +1,61 @@
 package me.mister.jobs.gui;
 
-import me.mister.jobs.JobManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class JobMenu {
 
-    public static void open(Player player, JobManager jobManager) {
-        Inventory inv = Bukkit.createInventory(null, 27, "Choisis ton métier");
+    public Inventory getMenu(Player p) {
 
-        inv.setItem(11, createItem(Material.IRON_PICKAXE, "§bMineur"));
-        inv.setItem(13, createItem(Material.OAK_LOG, "§6Bûcheron"));
-        inv.setItem(15, createItem(Material.WHEAT, "§eFermier"));
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Métiers");
 
-        player.openInventory(inv);
-    }
+        Material held = p.getInventory().getItemInMainHand().getType();
 
-    private static ItemStack createItem(Material mat, String name) {
-        ItemStack item = new ItemStack(mat);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        item.setItemMeta(meta);
-        return item;
+        // Mineur
+        ItemStack mineur = new ItemStack(Material.IRON_PICKAXE);
+        ItemMeta mMeta = mineur.getItemMeta();
+        mMeta.setDisplayName("§eMineur");
+
+        if (held.toString().contains("PICKAXE")) {
+            mMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+            mMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
+        mineur.setItemMeta(mMeta);
+        inv.setItem(11, mineur);
+
+        // Bucheron
+        ItemStack bucheron = new ItemStack(Material.IRON_AXE);
+        ItemMeta bMeta = bucheron.getItemMeta();
+        bMeta.setDisplayName("§eBûcheron");
+
+        if (held.toString().contains("AXE")) {
+            bMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+            bMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
+        bucheron.setItemMeta(bMeta);
+        inv.setItem(13, bucheron);
+
+        // Fermier
+        ItemStack fermier = new ItemStack(Material.IRON_HOE);
+        ItemMeta fMeta = fermier.getItemMeta();
+        fMeta.setDisplayName("§eFermier");
+
+        if (held.toString().contains("HOE")) {
+            fMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+            fMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
+        fermier.setItemMeta(fMeta);
+        inv.setItem(15, fermier);
+
+        return inv;
     }
 }

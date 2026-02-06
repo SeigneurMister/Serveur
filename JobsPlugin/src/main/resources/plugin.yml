@@ -3,6 +3,11 @@ version: 1.0
 main: me.mister.jobs.JobsPlugin
 api-version: 1.21
 author: Mister
+
 commands:
   job:
-    description: Ouvre le menu des jobs
+    description: Ouvre le menu des métiers
+  jobstats:
+    description: Affiche ton XP et ton niveau pour chaque métier
+  jobhelp:
+    description: Affiche la liste des commandes du plugin
