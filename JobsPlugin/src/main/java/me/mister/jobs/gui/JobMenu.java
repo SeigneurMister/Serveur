@@ -40,7 +40,7 @@ public class JobMenu {
         mMeta.setDisplayName("§eMineur");
 
         if (active == Job.MINEUR) {
-            mMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+            mMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
             mMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
@@ -53,7 +53,7 @@ public class JobMenu {
         buMeta.setDisplayName("§eBûcheron");
 
         if (active == Job.BUCHERON) {
-            buMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+            buMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
             buMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
@@ -66,7 +66,7 @@ public class JobMenu {
         fMeta.setDisplayName("§eFermier");
 
         if (active == Job.FERMIER) {
-            fMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+            fMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
             fMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
