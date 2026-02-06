@@ -1,5 +1,7 @@
 package me.mister.jobs.gui;
 
+import me.mister.jobs.Job;
+import me.mister.jobs.JobsPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,17 +15,17 @@ public class JobMenu {
 
     public Inventory getMenu(Player p) {
 
-        Inventory inv = Bukkit.createInventory(null, 27, "§6Métiers");
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Choisis ton métier");
 
-        Material held = p.getInventory().getItemInMainHand().getType();
+        Job active = JobsPlugin.getInstance().getJobManager().getJob(p);
 
         // Mineur
         ItemStack mineur = new ItemStack(Material.IRON_PICKAXE);
         ItemMeta mMeta = mineur.getItemMeta();
         mMeta.setDisplayName("§eMineur");
 
-        if (held.toString().contains("PICKAXE")) {
-            mMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        if (active == Job.MINEUR) {
+            mMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
             mMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
@@ -35,8 +37,8 @@ public class JobMenu {
         ItemMeta bMeta = bucheron.getItemMeta();
         bMeta.setDisplayName("§eBûcheron");
 
-        if (held.toString().contains("AXE")) {
-            bMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        if (active == Job.BUCHERON) {
+            bMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
             bMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
@@ -48,8 +50,8 @@ public class JobMenu {
         ItemMeta fMeta = fermier.getItemMeta();
         fMeta.setDisplayName("§eFermier");
 
-        if (held.toString().contains("HOE")) {
-            fMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        if (active == Job.FERMIER) {
+            fMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
             fMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 

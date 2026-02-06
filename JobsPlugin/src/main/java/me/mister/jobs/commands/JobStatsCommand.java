@@ -22,10 +22,10 @@ public class JobStatsCommand implements CommandExecutor {
             return true;
         }
 
-        p.sendMessage("§6===== §eTes métiers §6=====");
-        p.sendMessage("§eMineur : §a" + jobManager.getXp(p, "mineur") + " XP §7| Niveau §a" + jobManager.getLevel(p, "mineur"));
-        p.sendMessage("§eBûcheron : §a" + jobManager.getXp(p, "bucheron") + " XP §7| Niveau §a" + jobManager.getLevel(p, "bucheron"));
-        p.sendMessage("§eFermier : §a" + jobManager.getXp(p, "fermier") + " XP §7| Niveau §a" + jobManager.getLevel(p, "fermier"));
+        p.sendMessage("§6===== §eTes stats §6=====");
+        p.sendMessage("§eMétier actif : §a" + jobManager.getJob(p));
+        p.sendMessage("§eXP : §a" + jobManager.getXp(p));
+        p.sendMessage("§eNiveau : §a" + jobManager.getLevel(p));
 
         return true;
     }

@@ -1,37 +1,36 @@
 package me.mister.jobs.listeners;
 
 import me.mister.jobs.Job;
-import me.mister.jobs.JobManager;
+import me.mister.jobs.JobsPlugin;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.entity.Player;
 
 public class MenuListener implements Listener {
 
-    private final JobManager jobManager;
-
-    public MenuListener(JobManager jobManager) {
-        this.jobManager = jobManager;
-    }
-
     @EventHandler
-    public void onMenuClick(InventoryClickEvent event) {
-        if (!event.getView().getTitle().equals("Choisis ton métier")) return;
+    public void onClick(InventoryClickEvent e) {
 
-        event.setCancelled(true);
+        if (e.getView().getTitle().equals("§6Choisis ton métier")) {
+            e.setCancelled(true);
 
-        if (!(event.getWhoClicked() instanceof Player player)) return;
-        if (event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null) return;
+            if (!(e.getWhoClicked() instanceof Player p)) return;
 
-        String name = event.getCurrentItem().getItemMeta().getDisplayName();
+            Material clicked = e.getCurrentItem() == null ? null : e.getCurrentItem().getType();
 
-        switch (name) {
-            case "§bMineur" -> jobManager.setJob(player, new Job("Mineur"));
-            case "§6Bûcheron" -> jobManager.setJob(player, new Job("Bûcheron"));
-            case "§eFermier" -> jobManager.setJob(player, new Job("Fermier"));
+            if (clicked == Material.IRON_PICKAXE) {
+                JobsPlugin.getInstance().getJobManager().setJob(p, Job.MINEUR);
+            }
+
+            if (clicked == Material.IRON_AXE) {
+                JobsPlugin.getInstance().getJobManager().setJob(p, Job.BUCHERON);
+            }
+
+            if (clicked == Material.IRON_HOE) {
+                JobsPlugin.getInstance().getJobManager().setJob(p, Job.FERMIER);
+            }
         }
-
-        player.closeInventory();
     }
 }

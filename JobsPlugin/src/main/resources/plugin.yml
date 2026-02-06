@@ -7,7 +7,7 @@ author: Mister
 commands:
   job:
     description: Ouvre le menu des métiers
-  jobstats:
-    description: Affiche ton XP et ton niveau pour chaque métier
   jobhelp:
-    description: Affiche la liste des commandes du plugin
+    description: Affiche l'aide des métiers
+  jobstats:
+    description: Affiche ton XP et ton niveau

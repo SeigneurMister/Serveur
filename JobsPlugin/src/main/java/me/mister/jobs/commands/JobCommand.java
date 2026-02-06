@@ -16,13 +16,11 @@ public class JobCommand implements CommandExecutor {
             return true;
         }
 
-        // /job help
         if (args.length > 0 && args[0].equalsIgnoreCase("help")) {
             p.performCommand("jobhelp");
             return true;
         }
 
-        // /job (ouvrir le menu)
         JobMenu menu = new JobMenu();
         p.openInventory(menu.getMenu(p));
         return true;

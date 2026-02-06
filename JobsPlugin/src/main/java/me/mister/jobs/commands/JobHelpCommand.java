@@ -17,7 +17,7 @@ public class JobHelpCommand implements CommandExecutor {
 
         p.sendMessage("§6===== §eAide des métiers §6=====");
         p.sendMessage("§e/job §7→ Ouvre le menu des métiers");
-        p.sendMessage("§e/jobstats §7→ Affiche ton XP et ton niveau pour chaque métier");
+        p.sendMessage("§e/jobstats §7→ Affiche ton XP et ton niveau");
         p.sendMessage("§e/job help §7→ Affiche cette aide");
 
         return true;

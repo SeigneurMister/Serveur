@@ -8,82 +8,42 @@ import java.util.UUID;
 
 public class JobManager {
 
-    private final Map<UUID, Integer> xpMineur = new HashMap<>();
-    private final Map<UUID, Integer> lvlMineur = new HashMap<>();
+    private final Map<UUID, Job> activeJob = new HashMap<>();
 
-    private final Map<UUID, Integer> xpBucheron = new HashMap<>();
-    private final Map<UUID, Integer> lvlBucheron = new HashMap<>();
+    private final Map<UUID, Integer> xp = new HashMap<>();
+    private final Map<UUID, Integer> level = new HashMap<>();
 
-    private final Map<UUID, Integer> xpFermier = new HashMap<>();
-    private final Map<UUID, Integer> lvlFermier = new HashMap<>();
-
-    public int getXp(Player p, String job) {
-        return switch (job.toLowerCase()) {
-            case "mineur" -> xpMineur.getOrDefault(p.getUniqueId(), 0);
-            case "bucheron" -> xpBucheron.getOrDefault(p.getUniqueId(), 0);
-            case "fermier" -> xpFermier.getOrDefault(p.getUniqueId(), 0);
-            default -> 0;
-        };
+    public void setJob(Player p, Job job) {
+        activeJob.put(p.getUniqueId(), job);
+        p.sendMessage("§aTu es maintenant §e" + job.name());
     }
 
-    public int getLevel(Player p, String job) {
-        return switch (job.toLowerCase()) {
-            case "mineur" -> lvlMineur.getOrDefault(p.getUniqueId(), 1);
-            case "bucheron" -> lvlBucheron.getOrDefault(p.getUniqueId(), 1);
-            case "fermier" -> lvlFermier.getOrDefault(p.getUniqueId(), 1);
-            default -> 1;
-        };
+    public Job getJob(Player p) {
+        return activeJob.getOrDefault(p.getUniqueId(), null);
     }
 
-    public void addXp(Player p, String job, int amount) {
+    public void addXp(Player p, int amount) {
         UUID id = p.getUniqueId();
 
-        switch (job.toLowerCase()) {
+        int currentXp = xp.getOrDefault(id, 0) + amount;
+        int lvl = level.getOrDefault(id, 1);
+        int needed = lvl * 100;
 
-            case "mineur" -> {
-                int xp = xpMineur.getOrDefault(id, 0) + amount;
-                int lvl = lvlMineur.getOrDefault(id, 1);
-                int needed = lvl * 100;
-
-                if (xp >= needed) {
-                    xp -= needed;
-                    lvl++;
-                    p.sendMessage("§aTon métier de Mineur passe niveau §e" + lvl);
-                }
-
-                xpMineur.put(id, xp);
-                lvlMineur.put(id, lvl);
-            }
-
-            case "bucheron" -> {
-                int xp = xpBucheron.getOrDefault(id, 0) + amount;
-                int lvl = lvlBucheron.getOrDefault(id, 1);
-                int needed = lvl * 100;
-
-                if (xp >= needed) {
-                    xp -= needed;
-                    lvl++;
-                    p.sendMessage("§aTon métier de Bûcheron passe niveau §e" + lvl);
-                }
-
-                xpBucheron.put(id, xp);
-                lvlBucheron.put(id, lvl);
-            }
-
-            case "fermier" -> {
-                int xp = xpFermier.getOrDefault(id, 0) + amount;
-                int lvl = lvlFermier.getOrDefault(id, 1);
-                int needed = lvl * 100;
-
-                if (xp >= needed) {
-                    xp -= needed;
-                    lvl++;
-                    p.sendMessage("§aTon métier de Fermier passe niveau §e" + lvl);
-                }
-
-                xpFermier.put(id, xp);
-                lvlFermier.put(id, lvl);
-            }
+        if (currentXp >= needed) {
+            currentXp -= needed;
+            lvl++;
+            p.sendMessage("§aTu montes niveau §e" + lvl + " §apour ton métier !");
         }
+
+        xp.put(id, currentXp);
+        level.put(id, lvl);
+    }
+
+    public int getXp(Player p) {
+        return xp.getOrDefault(p.getUniqueId(), 0);
+    }
+
+    public int getLevel(Player p) {
+        return level.getOrDefault(p.getUniqueId(), 1);
     }
 }

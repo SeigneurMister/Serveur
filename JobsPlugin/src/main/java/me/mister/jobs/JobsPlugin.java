@@ -1,7 +1,10 @@
 package me.mister.jobs;
 
+import me.mister.jobs.commands.JobCommand;
 import me.mister.jobs.commands.JobHelpCommand;
 import me.mister.jobs.commands.JobStatsCommand;
+import me.mister.jobs.listeners.JobListener;
+import me.mister.jobs.listeners.MenuListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JobsPlugin extends JavaPlugin {
@@ -14,10 +17,12 @@ public class JobsPlugin extends JavaPlugin {
         instance = this;
         jobManager = new JobManager();
 
-        // Commandes
         getCommand("job").setExecutor(new JobCommand());
-        getCommand("jobstats").setExecutor(new JobStatsCommand(jobManager));
         getCommand("jobhelp").setExecutor(new JobHelpCommand());
+        getCommand("jobstats").setExecutor(new JobStatsCommand(jobManager));
+
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        getServer().getPluginManager().registerEvents(new JobListener(), this);
 
         getLogger().info("JobsPlugin activé !");
     }
