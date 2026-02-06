@@ -42,7 +42,6 @@ public class JobEditorListener implements Listener {
             return;
         }
 
-        // Modification d’un bloc
         Material mat = e.getCurrentItem().getType();
         if (mat == Material.CYAN_STAINED_GLASS_PANE || mat == Material.ARROW || mat == Material.EMERALD_BLOCK)
             return;

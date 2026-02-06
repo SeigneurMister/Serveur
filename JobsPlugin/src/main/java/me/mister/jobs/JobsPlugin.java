@@ -31,6 +31,7 @@ public class JobsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockAddChatListener(), this);
 
 
+
         // Commandes
         getCommand("job").setExecutor(new JobCommand());
         getCommand("jobhelp").setExecutor(new JobHelpCommand());
