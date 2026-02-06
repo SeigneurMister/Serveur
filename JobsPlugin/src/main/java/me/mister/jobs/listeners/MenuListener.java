@@ -2,7 +2,8 @@ package me.mister.jobs.listeners;
 
 import me.mister.jobs.Job;
 import me.mister.jobs.JobsPlugin;
-import org.bukkit.Material;
+import me.mister.jobs.gui.JobAdminMenu;
+import me.mister.jobs.gui.JobMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,34 +16,25 @@ public class MenuListener implements Listener {
 
         if (!(e.getWhoClicked() instanceof Player p)) return;
 
-        // Vérifie le bon menu
-        if (!e.getView().getTitle().equals("§b§lMétiers disponibles")) return;
+        if (!e.getView().getTitle().equals("§b§lMenu des Métiers")) return;
 
         e.setCancelled(true);
 
         if (e.getCurrentItem() == null) return;
 
-        Material clicked = e.getCurrentItem().getType();
+        switch (e.getRawSlot()) {
 
-        switch (clicked) {
+            case 10 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.MINEUR);
+            case 12 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.BUCHERON);
+            case 14 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.FERMIER);
 
-            case DIAMOND_PICKAXE -> {
-                JobsPlugin.getInstance().getJobManager().setJob(p, Job.MINEUR);
-                p.sendMessage("§aTu es maintenant Mineur !");
-                p.closeInventory();
-            }
+            case 16 -> p.performCommand("jobstats");
 
-            case DIAMOND_AXE -> {
-                JobsPlugin.getInstance().getJobManager().setJob(p, Job.BUCHERON);
-                p.sendMessage("§aTu es maintenant Bûcheron !");
-                p.closeInventory();
-            }
-
-            case DIAMOND_HOE -> {
-                JobsPlugin.getInstance().getJobManager().setJob(p, Job.FERMIER);
-                p.sendMessage("§aTu es maintenant Fermier !");
-                p.closeInventory();
+            case 22 -> {
+                if (p.isOp()) p.openInventory(new JobAdminMenu().getMenu(p));
             }
         }
+
+        p.openInventory(new JobMenu().getMenu(p));
     }
 }

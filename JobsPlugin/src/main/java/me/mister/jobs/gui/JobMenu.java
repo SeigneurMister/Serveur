@@ -4,10 +4,8 @@ import me.mister.jobs.Job;
 import me.mister.jobs.JobsPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,96 +15,69 @@ public class JobMenu {
 
     public Inventory getMenu(Player p) {
 
-        Inventory inv = Bukkit.createInventory(null, 36, "§b§lMétiers disponibles");
+        Inventory inv = Bukkit.createInventory(null, 27, "§b§lMenu des Métiers");
 
-        Job active = JobsPlugin.getInstance().getJobManager().getJob(p);
-
-        // Fond moderne bleu/cyan
-        ItemStack glass = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        // Fond bleu/cyan
+        ItemStack glass = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
         ItemMeta gMeta = glass.getItemMeta();
         gMeta.setDisplayName(" ");
         glass.setItemMeta(gMeta);
 
-        for (int i = 0; i < 36; i++) {
-            inv.setItem(i, glass);
-        }
+        for (int i = 0; i < 27; i++) inv.setItem(i, glass);
 
-        // Livre du créateur (slot 4)
-        ItemStack book = new ItemStack(Material.WRITABLE_BOOK);
-        ItemMeta bMeta = book.getItemMeta();
-        bMeta.setDisplayName("§b§lÀ propos du plugin");
-        bMeta.setLore(Arrays.asList(
-                "§7Créé par : §3§lTMD_Mister",
-                "",
-                "§fPlugin de métiers moderne",
-                "§favec XP, niveaux et GUI stylé.",
-                "",
-                "§bMerci d'utiliser ce plugin !"
-        ));
-        book.setItemMeta(bMeta);
-        inv.setItem(4, book);
-
-        // On remet les slots des métiers à vide pour éviter le bug
-        inv.setItem(11, null);
-        inv.setItem(13, null);
-        inv.setItem(15, null);
+        Job active = JobsPlugin.getInstance().getJobManager().getJob(p);
 
         // MINEUR
         ItemStack mineur = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta mMeta = mineur.getItemMeta();
-        mMeta.setDisplayName("§bMineur");
+        mMeta.setDisplayName("§eMineur");
         mMeta.setLore(Arrays.asList(
-                "§7Casse des minerais et pierres",
-                "§7pour gagner de l'XP.",
+                "§7Miner des blocs pour gagner de l'XP.",
                 "",
-                active == Job.MINEUR ? "§a§lMétier actif" : "§7Clique pour choisir"
+                active == Job.MINEUR ? "§a§lMÉTIER ACTIF" : "§bClique pour choisir"
         ));
-
-        if (active == Job.MINEUR) {
-            mMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
-            mMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-
         mineur.setItemMeta(mMeta);
-        inv.setItem(11, mineur);
+        inv.setItem(10, mineur);
 
         // BUCHERON
         ItemStack bucheron = new ItemStack(Material.DIAMOND_AXE);
-        ItemMeta buMeta = bucheron.getItemMeta();
-        buMeta.setDisplayName("§bBûcheron");
-        buMeta.setLore(Arrays.asList(
-                "§7Coupe des arbres",
-                "§7pour gagner de l'XP.",
+        ItemMeta bMeta = bucheron.getItemMeta();
+        bMeta.setDisplayName("§eBûcheron");
+        bMeta.setLore(Arrays.asList(
+                "§7Couper du bois pour gagner de l'XP.",
                 "",
-                active == Job.BUCHERON ? "§a§lMétier actif" : "§7Clique pour choisir"
+                active == Job.BUCHERON ? "§a§lMÉTIER ACTIF" : "§bClique pour choisir"
         ));
-
-        if (active == Job.BUCHERON) {
-            buMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
-            buMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-
-        bucheron.setItemMeta(buMeta);
-        inv.setItem(13, bucheron);
+        bucheron.setItemMeta(bMeta);
+        inv.setItem(12, bucheron);
 
         // FERMIER
         ItemStack fermier = new ItemStack(Material.DIAMOND_HOE);
         ItemMeta fMeta = fermier.getItemMeta();
-        fMeta.setDisplayName("§bFermier");
+        fMeta.setDisplayName("§eFermier");
         fMeta.setLore(Arrays.asList(
-                "§7Récolte des cultures",
-                "§7pour gagner de l'XP.",
+                "§7Récolter des cultures pour gagner de l'XP.",
                 "",
-                active == Job.FERMIER ? "§a§lMétier actif" : "§7Clique pour choisir"
+                active == Job.FERMIER ? "§a§lMÉTIER ACTIF" : "§bClique pour choisir"
         ));
-
-        if (active == Job.FERMIER) {
-            fMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
-            fMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-
         fermier.setItemMeta(fMeta);
-        inv.setItem(15, fermier);
+        inv.setItem(14, fermier);
+
+        // Stats
+        ItemStack stats = new ItemStack(Material.BOOK);
+        ItemMeta sMeta = stats.getItemMeta();
+        sMeta.setDisplayName("§bVoir mes statistiques");
+        stats.setItemMeta(sMeta);
+        inv.setItem(16, stats);
+
+        // Admin
+        if (p.isOp()) {
+            ItemStack admin = new ItemStack(Material.REDSTONE);
+            ItemMeta aMeta = admin.getItemMeta();
+            aMeta.setDisplayName("§cAdministration");
+            admin.setItemMeta(aMeta);
+            inv.setItem(22, admin);
+        }
 
         return inv;
     }
