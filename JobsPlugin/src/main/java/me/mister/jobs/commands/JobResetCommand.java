@@ -34,7 +34,6 @@ public class JobResetCommand implements CommandExecutor {
 
         JobsPlugin.getInstance().getJobManager().resetJob(target, job);
 
-        sender.sendMessage("§aLe métier de §e" + target.getName() + " §aa été réinitialisé.");
         target.sendMessage("§cTon métier §e" + job.name() + " §ca été réinitialisé !");
         return true;
     }
