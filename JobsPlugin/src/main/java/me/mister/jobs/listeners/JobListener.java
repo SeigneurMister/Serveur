@@ -2,7 +2,6 @@ package me.mister.jobs.listeners;
 
 import me.mister.jobs.Job;
 import me.mister.jobs.JobsPlugin;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,31 +26,11 @@ public class JobListener implements Listener {
 
         e.setExpToDrop(0);
 
-        int xpGain = 0;
+        // Type du bloc cassé
+        Material blockType = e.getBlock().getType();
 
-        switch (job) {
-
-            case MINEUR -> {
-                if (e.getBlock().getType().toString().contains("STONE") ||
-                    e.getBlock().getType().toString().contains("ORE")) {
-                    xpGain = 10;
-                }
-            }
-
-            case BUCHERON -> {
-                if (e.getBlock().getType().toString().contains("LOG")) {
-                    xpGain = 10;
-                }
-            }
-
-            case FERMIER -> {
-                if (e.getBlock().getType() == Material.WHEAT ||
-                    e.getBlock().getType() == Material.CARROTS ||
-                    e.getBlock().getType() == Material.POTATOES) {
-                    xpGain = 10;
-                }
-            }
-        }
+        // Récupération dynamique de l’XP depuis blocks.yml
+        int xpGain = JobsPlugin.getInstance().getBlockConfigManager().getXp(job, blockType);
 
         if (xpGain > 0) {
 
@@ -63,18 +42,17 @@ public class JobListener implements Listener {
             // Enregistre le moment du gain d’XP
             lastXpTime.put(p, System.currentTimeMillis());
 
-            // Lance un timer pour effacer après 5 secondes
+            // Timer pour effacer l’actionbar après 5 secondes
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     long last = lastXpTime.getOrDefault(p, 0L);
 
-                    // Si 5 secondes sont passées sans nouveau XP → effacer
                     if (System.currentTimeMillis() - last >= 5000) {
                         p.sendActionBar("");
                     }
                 }
-            }.runTaskLater(JobsPlugin.getInstance(), 20 * 5); // 5 secondes
+            }.runTaskLater(JobsPlugin.getInstance(), 20 * 5);
         }
     }
 }
