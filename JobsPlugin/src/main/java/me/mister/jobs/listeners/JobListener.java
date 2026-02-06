@@ -5,11 +5,13 @@ import me.mister.jobs.JobsPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 
 public class JobListener implements Listener {
@@ -18,9 +20,15 @@ public class JobListener implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
-        BlockState state = e.getBlockPlaced().getState();
-        state.getPersistentDataContainer().set(placedKey, PersistentDataType.BYTE, (byte) 1);
-        state.update(true);
+        Block block = e.getBlockPlaced();
+        BlockState state = block.getState();
+
+        if (state instanceof TileState tile) {
+            tile.getPersistentDataContainer().set(placedKey, PersistentDataType.BYTE, (byte) 1);
+            tile.update(true);
+        } else {
+            block.setMetadata("player_placed", new FixedMetadataValue(JobsPlugin.getInstance(), true));
+        }
     }
 
     @EventHandler
@@ -30,7 +38,15 @@ public class JobListener implements Listener {
         Block block = e.getBlock();
         BlockState state = block.getState();
 
-        if (state.getPersistentDataContainer().has(placedKey, PersistentDataType.BYTE)) {
+        boolean placed = false;
+
+        if (state instanceof TileState tile) {
+            placed = tile.getPersistentDataContainer().has(placedKey, PersistentDataType.BYTE);
+        } else if (block.hasMetadata("player_placed")) {
+            placed = true;
+        }
+
+        if (placed) {
             return;
         }
 
