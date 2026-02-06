@@ -21,9 +21,10 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file JobsPlugin/pom.xml
-
+    
     - name: Upload plugin jar
       uses: actions/upload-artifact@v4
       with:
-         name: JobsPlugin
-         path: JobsPlugin/target/*.jar
+        name: JobsPlugin
+        path: JobsPlugin/target/*.jar
+
