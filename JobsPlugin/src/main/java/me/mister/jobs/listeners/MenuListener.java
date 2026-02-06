@@ -13,23 +13,35 @@ public class MenuListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
 
-        if (e.getView().getTitle().equals("§6Choisis ton métier")) {
-            e.setCancelled(true);
+        if (!(e.getWhoClicked() instanceof Player p)) return;
 
-            if (!(e.getWhoClicked() instanceof Player p)) return;
+        // Vérifie le bon menu
+        if (!e.getView().getTitle().equals("§b§lMétiers disponibles")) return;
 
-            Material clicked = e.getCurrentItem() == null ? null : e.getCurrentItem().getType();
+        e.setCancelled(true);
 
-            if (clicked == Material.IRON_PICKAXE) {
+        if (e.getCurrentItem() == null) return;
+
+        Material clicked = e.getCurrentItem().getType();
+
+        switch (clicked) {
+
+            case DIAMOND_PICKAXE -> {
                 JobsPlugin.getInstance().getJobManager().setJob(p, Job.MINEUR);
+                p.sendMessage("§aTu es maintenant Mineur !");
+                p.closeInventory();
             }
 
-            if (clicked == Material.IRON_AXE) {
+            case DIAMOND_AXE -> {
                 JobsPlugin.getInstance().getJobManager().setJob(p, Job.BUCHERON);
+                p.sendMessage("§aTu es maintenant Bûcheron !");
+                p.closeInventory();
             }
 
-            if (clicked == Material.IRON_HOE) {
+            case DIAMOND_HOE -> {
                 JobsPlugin.getInstance().getJobManager().setJob(p, Job.FERMIER);
+                p.sendMessage("§aTu es maintenant Fermier !");
+                p.closeInventory();
             }
         }
     }
