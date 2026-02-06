@@ -14,6 +14,7 @@ public class AdminMenuListener implements Listener {
 
         if (!(e.getWhoClicked() instanceof Player p)) return;
 
+        // Titre EXACT du menu admin
         if (!e.getView().getTitle().equals("§b§lAdministration des Métiers")) return;
 
         e.setCancelled(true);
@@ -21,11 +22,11 @@ public class AdminMenuListener implements Listener {
         if (e.getCurrentItem() == null) return;
 
         switch (e.getRawSlot()) {
+
             case 20 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.MINEUR));
             case 22 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.BUCHERON));
-            case 24 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.FERMIER));
+            case 24 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.FERMIER)); // ✔ IMPORTANT
             case 40 -> p.closeInventory();
         }
     }
 }
-

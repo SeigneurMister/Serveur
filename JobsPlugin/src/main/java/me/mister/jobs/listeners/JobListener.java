@@ -2,59 +2,57 @@ package me.mister.jobs.listeners;
 
 import me.mister.jobs.Job;
 import me.mister.jobs.JobsPlugin;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.TileState;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class JobListener implements Listener {
 
-    private final NamespacedKey placedKey = new NamespacedKey(JobsPlugin.getInstance(), "player_placed");
-
-    @EventHandler
-    public void onPlace(BlockPlaceEvent e) {
-        Block block = e.getBlockPlaced();
-        BlockState state = block.getState();
-
-        if (state instanceof TileState tile) {
-            tile.getPersistentDataContainer().set(placedKey, PersistentDataType.BYTE, (byte) 1);
-            tile.update(true);
-        } else {
-            block.setMetadata("player_placed", new FixedMetadataValue(JobsPlugin.getInstance(), true));
-        }
-    }
+    private final Map<Player, Long> lastXpTime = new HashMap<>();
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
 
         Player p = e.getPlayer();
-        Block block = e.getBlock();
-        BlockState state = block.getState();
+        Job job = JobsPlugin.getInstance().getJobManager().getJob(p);
 
-        boolean placed = false;
+        if (job == null) return;
 
-        if (state instanceof TileState tile) {
-            placed = tile.getPersistentDataContainer().has(placedKey, PersistentDataType.BYTE);
-        } else if (block.hasMetadata("player_placed")) {
-            placed = true;
-        }
+        e.setExpToDrop(0);
 
-        if (placed) {
-            return;
-        }
+        // Type du bloc cassé
+        Material blockType = e.getBlock().getType();
 
-        for (Job job : Job.values()) {
-            int xp = JobsPlugin.getInstance().getBlockConfigManager().getXp(job, block.getType());
-            if (xp > 0) {
-                p.sendMessage("§a+" + xp + " XP (" + job.name() + ")");
-            }
+        // Récupération dynamique de l’XP depuis blocks.yml
+        int xpGain = JobsPlugin.getInstance().getBlockConfigManager().getXp(job, blockType);
+
+        if (xpGain > 0) {
+
+            JobsPlugin.getInstance().getJobManager().addXp(p, xpGain);
+
+            // Actionbar +XP
+            p.sendActionBar("§6§l+" + xpGain + " XP");
+
+            // Enregistre le moment du gain d’XP
+            lastXpTime.put(p, System.currentTimeMillis());
+
+            // Timer pour effacer l’actionbar après 5 secondes
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    long last = lastXpTime.getOrDefault(p, 0L);
+
+                    if (System.currentTimeMillis() - last >= 5000) {
+                        p.sendActionBar("");
+                    }
+                }
+            }.runTaskLater(JobsPlugin.getInstance(), 20 * 5);
         }
     }
 }

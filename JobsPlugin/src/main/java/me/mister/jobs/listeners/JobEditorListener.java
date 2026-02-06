@@ -28,11 +28,13 @@ public class JobEditorListener implements Listener {
 
         int slot = e.getRawSlot();
 
+        // Retour
         if (slot == 45) {
             p.openInventory(new JobAdminMenu().getMenu(p));
             return;
         }
 
+        // Ajouter un bloc
         if (slot == 49) {
             p.closeInventory();
             p.sendMessage("§aTape le nom du bloc à ajouter dans le chat.");
@@ -44,18 +46,21 @@ public class JobEditorListener implements Listener {
         if (mat == Material.CYAN_STAINED_GLASS_PANE || mat == Material.ARROW || mat == Material.EMERALD_BLOCK)
             return;
 
+        // Clic gauche → +1 XP
         if (e.isLeftClick() && !e.isShiftClick()) {
             JobsPlugin.getInstance().getBlockConfigManager().addXp(job, mat, 1);
             p.openInventory(new JobEditorMenu().getMenu(p, job));
             return;
         }
 
+        // Clic droit → -1 XP
         if (e.isRightClick() && !e.isShiftClick()) {
             JobsPlugin.getInstance().getBlockConfigManager().addXp(job, mat, -1);
             p.openInventory(new JobEditorMenu().getMenu(p, job));
             return;
         }
 
+        // Shift + clic → supprimer
         if (e.isShiftClick()) {
             JobsPlugin.getInstance().getBlockConfigManager().removeBlock(job, mat);
             p.openInventory(new JobEditorMenu().getMenu(p, job));
