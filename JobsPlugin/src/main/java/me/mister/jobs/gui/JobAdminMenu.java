@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,6 +37,7 @@ public class JobAdminMenu {
                 "",
                 "§bClique pour ouvrir l'éditeur"
         ));
+        mMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES); // ✔ IMPORTANT
         mineur.setItemMeta(mMeta);
         inv.setItem(20, mineur);
 
@@ -49,6 +51,7 @@ public class JobAdminMenu {
                 "",
                 "§bClique pour ouvrir l'éditeur"
         ));
+        bMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES); // ✔ IMPORTANT
         bucheron.setItemMeta(bMeta);
         inv.setItem(22, bucheron);
 
@@ -62,6 +65,7 @@ public class JobAdminMenu {
                 "",
                 "§bClique pour ouvrir l'éditeur"
         ));
+        fMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES); // ✔ IMPORTANT
         fermier.setItemMeta(fMeta);
         inv.setItem(24, fermier);
 

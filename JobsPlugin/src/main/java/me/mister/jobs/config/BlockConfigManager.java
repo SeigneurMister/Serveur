@@ -3,6 +3,7 @@ package me.mister.jobs.config;
 import me.mister.jobs.Job;
 import me.mister.jobs.JobsPlugin;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -43,52 +44,65 @@ public class BlockConfigManager {
         }
     }
 
+    // clé YAML : mineur / bucheron / fermier
+    private String getJobKey(Job job) {
+        return job.name().toLowerCase();
+    }
+
     // Récupère la liste des blocs d’un métier
     public List<String> getBlocks(Job job) {
-        return new ArrayList<>(config.getConfigurationSection(job.name()).getKeys(false));
+        String key = getJobKey(job);
+        ConfigurationSection section = config.getConfigurationSection(key);
+        if (section == null) return new ArrayList<>();
+        return new ArrayList<>(section.getKeys(false));
     }
 
     // Récupère l’XP d’un bloc
     public int getXp(Job job, Material mat) {
-        return config.getInt(job.name() + "." + mat.name(), 0);
+        if (job == null || mat == null) return 0;
+        String path = getJobKey(job) + "." + mat.name();
+        return config.getInt(path, 0);
     }
 
     // Ajoute un bloc
     public void addBlock(Job job, Material mat, int xp) {
-        config.set(job.name() + "." + mat.name(), xp);
+        if (job == null || mat == null) return;
+        String path = getJobKey(job) + "." + mat.name();
+        config.set(path, xp);
         save();
     }
 
     // Supprime un bloc
     public void removeBlock(Job job, Material mat) {
-        config.set(job.name() + "." + mat.name(), null);
+        if (job == null || mat == null) return;
+        String path = getJobKey(job) + "." + mat.name();
+        config.set(path, null);
         save();
     }
 
     // Modifie l’XP d’un bloc
     public void addXp(Job job, Material mat, int amount) {
+        if (job == null || mat == null) return;
         int current = getXp(job, mat);
         int newXp = Math.max(0, current + amount);
-        config.set(job.name() + "." + mat.name(), newXp);
+        String path = getJobKey(job) + "." + mat.name();
+        config.set(path, newXp);
         save();
     }
 
-    // Active le mode ajout via le chat
+    // Mode ajout via le chat
     public void startAddMode(Player p, Job job) {
         pendingAdd.put(p.getUniqueId(), job);
     }
 
-    // Vérifie si un joueur est en mode ajout
     public boolean isInAddMode(Player p) {
         return pendingAdd.containsKey(p.getUniqueId());
     }
 
-    // Récupère le métier en mode ajout
     public Job getPendingJob(Player p) {
         return pendingAdd.get(p.getUniqueId());
     }
 
-    // Termine le mode ajout
     public void finishAddMode(Player p) {
         pendingAdd.remove(p.getUniqueId());
     }
