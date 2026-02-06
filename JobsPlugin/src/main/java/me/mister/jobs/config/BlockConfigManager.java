@@ -26,7 +26,7 @@ public class BlockConfigManager {
         load();
     }
 
-    private void load() {
+    public void load() {
         file = new File(plugin.getDataFolder(), "blocks.yml");
 
         if (!file.exists()) {
@@ -34,6 +34,9 @@ public class BlockConfigManager {
         }
 
         config = YamlConfiguration.loadConfiguration(file);
+
+        // ⭐ TEST DEBUG : affiche les sections trouvées
+        plugin.getLogger().info("Clés trouvées dans blocks.yml : " + config.getKeys(false));
     }
 
     private void save() {
@@ -44,7 +47,6 @@ public class BlockConfigManager {
         }
     }
 
-    // clé YAML : mineur / bucheron / fermier
     private String getJobKey(Job job) {
         return job.name().toLowerCase();
     }
