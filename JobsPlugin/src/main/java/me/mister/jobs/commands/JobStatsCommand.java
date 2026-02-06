@@ -1,10 +1,12 @@
 package me.mister.jobs.commands;
 
+import me.mister.jobs.Job;
 import me.mister.jobs.JobManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 
 public class JobStatsCommand implements CommandExecutor {
 
