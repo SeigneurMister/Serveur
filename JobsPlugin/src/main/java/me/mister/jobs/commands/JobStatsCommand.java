@@ -24,8 +24,10 @@ public class JobStatsCommand implements CommandExecutor {
 
         p.sendMessage("§6===== §eTes stats §6=====");
         p.sendMessage("§eMétier actif : §a" + jobManager.getJob(p));
-        p.sendMessage("§eXP : §a" + jobManager.getXp(p));
-        p.sendMessage("§eNiveau : §a" + jobManager.getLevel(p));
+        p.sendMessage("§eMineur : §a" + jobManager.getXp(p, Job.MINEUR) + "§7/100 XP | Niveau §a" + jobManager.getLevel(p, Job.MINEUR));
+        p.sendMessage("§eBûcheron : §a" + jobManager.getXp(p, Job.BUCHERON) + "§7/100 XP | Niveau §a" + jobManager.getLevel(p, Job.BUCHERON));
+        p.sendMessage("§eFermier : §a" + jobManager.getXp(p, Job.FERMIER) + "§7/100 XP | Niveau §a" + jobManager.getLevel(p, Job.FERMIER));
+
 
         return true;
     }
