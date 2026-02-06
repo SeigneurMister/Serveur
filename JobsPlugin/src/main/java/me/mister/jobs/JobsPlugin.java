@@ -7,7 +7,9 @@ import me.mister.jobs.commands.JobResetCommand;
 import me.mister.jobs.config.BlockConfigManager;
 import me.mister.jobs.listeners.JobListener;
 import me.mister.jobs.listeners.MenuListener;
-import me.mister.jobs.listeners.AdminMenuListener; // IMPORT MANQUANT !!!
+import me.mister.jobs.listeners.AdminMenuListener;
+import me.mister.jobs.listeners.JobEditorListener;  
+import me.mister.jobs.listeners.BlockAddChatListener; 
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JobsPlugin extends JavaPlugin {
