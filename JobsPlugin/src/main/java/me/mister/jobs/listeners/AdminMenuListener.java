@@ -22,21 +22,10 @@ public class AdminMenuListener implements Listener {
 
         switch (e.getRawSlot()) {
 
-            case 10 -> { // Mineur
-                p.openInventory(new JobEditorMenu().getMenu(p, Job.MINEUR));
-            }
-
-            case 12 -> { // Bûcheron
-                p.openInventory(new JobEditorMenu().getMenu(p, Job.BUCHERON));
-            }
-
-            case 14 -> { // Fermier
-                p.openInventory(new JobEditorMenu().getMenu(p, Job.FERMIER));
-            }
-
-            case 31 -> { // Retour
-                p.closeInventory();
-            }
+            case 20 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.MINEUR));
+            case 22 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.BUCHERON));
+            case 24 -> p.openInventory(new JobEditorMenu().getMenu(p, Job.FERMIER));
+            case 40 -> p.closeInventory();
         }
     }
 }

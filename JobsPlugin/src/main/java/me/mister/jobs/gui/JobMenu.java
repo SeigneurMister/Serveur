@@ -15,7 +15,7 @@ public class JobMenu {
 
     public Inventory getMenu(Player p) {
 
-        Inventory inv = Bukkit.createInventory(null, 27, "§b§lMétiers");
+        Inventory inv = Bukkit.createInventory(null, 45, "§b§lMétiers");
 
         // Fond cyan moderne
         ItemStack glass = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
@@ -23,14 +23,20 @@ public class JobMenu {
         gMeta.setDisplayName(" ");
         glass.setItemMeta(gMeta);
 
-        for (int i = 0; i < 27; i++) inv.setItem(i, glass);
+        for (int i = 0; i < 45; i++) inv.setItem(i, glass);
 
         Job active = JobsPlugin.getInstance().getJobManager().getJob(p);
 
-        // Livre (infos)
+        // Livre d'informations
         ItemStack book = new ItemStack(Material.BOOK);
         ItemMeta bMeta = book.getItemMeta();
-        bMeta.setDisplayName("§bInformations");
+        bMeta.setDisplayName("§bInformations du plugin");
+        bMeta.setLore(java.util.List.of(
+                "§7Plugin créé par §eMister",
+                "§7Système de métiers personnalisé",
+                "",
+                "§bClique sur un métier pour le choisir"
+        ));
         book.setItemMeta(bMeta);
         inv.setItem(4, book);
 
@@ -45,7 +51,7 @@ public class JobMenu {
         }
 
         mineur.setItemMeta(mMeta);
-        inv.setItem(11, mineur);
+        inv.setItem(20, mineur);
 
         // BUCHERON
         ItemStack bucheron = new ItemStack(Material.DIAMOND_AXE);
@@ -58,7 +64,7 @@ public class JobMenu {
         }
 
         bucheron.setItemMeta(buMeta);
-        inv.setItem(13, bucheron);
+        inv.setItem(22, bucheron);
 
         // FERMIER
         ItemStack fermier = new ItemStack(Material.DIAMOND_HOE);
@@ -71,7 +77,7 @@ public class JobMenu {
         }
 
         fermier.setItemMeta(fMeta);
-        inv.setItem(15, fermier);
+        inv.setItem(24, fermier);
 
         return inv;
     }

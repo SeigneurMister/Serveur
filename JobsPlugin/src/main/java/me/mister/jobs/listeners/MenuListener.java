@@ -23,9 +23,9 @@ public class MenuListener implements Listener {
 
         switch (e.getRawSlot()) {
 
-            case 11 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.MINEUR);
-            case 13 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.BUCHERON);
-            case 15 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.FERMIER);
+            case 20 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.MINEUR);
+            case 22 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.BUCHERON);
+            case 24 -> JobsPlugin.getInstance().getJobManager().setJob(p, Job.FERMIER);
         }
 
         p.openInventory(new JobMenu().getMenu(p));
