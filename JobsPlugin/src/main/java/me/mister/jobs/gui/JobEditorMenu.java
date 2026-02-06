@@ -27,7 +27,7 @@ public class JobEditorMenu {
             inv.setItem(i, glass);
         }
 
-        // Récupération des blocs du métier
+        // Récupération des blocs du métier (clé YAML en minuscule)
         List<String> blocks = JobsPlugin.getInstance().getBlockConfigManager().getBlocks(job);
 
         int slot = 10;
