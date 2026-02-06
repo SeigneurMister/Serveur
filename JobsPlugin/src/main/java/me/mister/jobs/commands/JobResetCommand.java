@@ -2,7 +2,6 @@ package me.mister.jobs.commands;
 
 import me.mister.jobs.Job;
 import me.mister.jobs.JobsPlugin;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,28 +12,23 @@ public class JobResetCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if (args.length != 2) {
-            sender.sendMessage("§cUsage : /jobreset <joueur> <mineur|bucheron|fermier>");
+        if (!(sender instanceof Player p)) {
+            sender.sendMessage("Commande réservée aux joueurs.");
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
-        if (target == null) {
-            sender.sendMessage("§cJoueur introuvable.");
+        if (args.length != 1) {
+            p.sendMessage("§cUsage : /jobreset <mineur|bucheron|fermier>");
             return true;
         }
 
-        Job job;
         try {
-            job = Job.valueOf(args[1].toUpperCase());
-        } catch (Exception e) {
-            sender.sendMessage("§cMétier invalide. Utilise : mineur, bucheron, fermier");
-            return true;
+            Job job = Job.valueOf(args[0].toUpperCase());
+            JobsPlugin.getInstance().getJobManager().resetJob(p, job);
+        } catch (Exception ex) {
+            p.sendMessage("§cMétier inconnu.");
         }
 
-        JobsPlugin.getInstance().getJobManager().resetJob(target, job);
-
-        target.sendMessage("§cTon métier §e" + job.name() + " §ca été réinitialisé !");
         return true;
     }
 }

@@ -1,20 +1,13 @@
 package me.mister.jobs.commands;
 
 import me.mister.jobs.Job;
-import me.mister.jobs.JobManager;
+import me.mister.jobs.JobsPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-
 public class JobStatsCommand implements CommandExecutor {
-
-    private final JobManager jobManager;
-
-    public JobStatsCommand(JobManager jobManager) {
-        this.jobManager = jobManager;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -24,12 +17,25 @@ public class JobStatsCommand implements CommandExecutor {
             return true;
         }
 
-        p.sendMessage("§6===== §eTes stats §6=====");
-        p.sendMessage("§eMétier actif : §a" + jobManager.getJob(p));
-        p.sendMessage("§eMineur : §a" + jobManager.getXp(p, Job.MINEUR) + "§7/100 XP | Niveau §a" + jobManager.getLevel(p, Job.MINEUR));
-        p.sendMessage("§eBûcheron : §a" + jobManager.getXp(p, Job.BUCHERON) + "§7/100 XP | Niveau §a" + jobManager.getLevel(p, Job.BUCHERON));
-        p.sendMessage("§eFermier : §a" + jobManager.getXp(p, Job.FERMIER) + "§7/100 XP | Niveau §a" + jobManager.getLevel(p, Job.FERMIER));
+        p.sendMessage("§b§l===== TES MÉTIERS =====");
 
+        for (Job job : Job.values()) {
+
+            int xp = JobsPlugin.getInstance().getJobManager().getXp(p, job);
+            int lvl = JobsPlugin.getInstance().getJobManager().getLevel(p, job);
+            int needed = lvl * 100;
+
+            boolean actif = JobsPlugin.getInstance().getJobManager().getJob(p) == job;
+
+            p.sendMessage(
+                    (actif ? "§a§l[ACTIF] " : "§7") +
+                    "§e" + job.name() +
+                    " §7| Niveau : §b" + lvl +
+                    " §7| XP : §b" + xp + "§7/§b" + needed
+            );
+        }
+
+        p.sendMessage("§b========================");
 
         return true;
     }

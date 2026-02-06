@@ -11,6 +11,5 @@ commands:
     description: Affiche l'aide des métiers
   jobstats:
     description: Affiche ton XP et ton niveau
-  jobreset: 
+  jobreset:
     description: Reset le niveau d’un métier
-

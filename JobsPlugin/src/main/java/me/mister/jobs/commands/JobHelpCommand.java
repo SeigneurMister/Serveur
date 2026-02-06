@@ -15,10 +15,11 @@ public class JobHelpCommand implements CommandExecutor {
             return true;
         }
 
-        p.sendMessage("§6===== §eAide des métiers §6=====");
+        p.sendMessage("§b§l===== AIDE DES MÉTIERS =====");
         p.sendMessage("§e/job §7→ Ouvre le menu des métiers");
-        p.sendMessage("§e/jobstats §7→ Affiche ton XP et ton niveau");
-        p.sendMessage("§e/job help §7→ Affiche cette aide");
+        p.sendMessage("§e/jobstats §7→ Affiche tes niveaux et XP");
+        p.sendMessage("§e/jobreset <métier> §7→ Reset un métier");
+        p.sendMessage("§b==============================");
 
         return true;
     }
