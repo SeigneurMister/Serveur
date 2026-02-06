@@ -3,6 +3,7 @@ package me.mister.jobs;
 import me.mister.jobs.commands.JobCommand;
 import me.mister.jobs.commands.JobHelpCommand;
 import me.mister.jobs.commands.JobStatsCommand;
+import me.mister.jobs.commands.JobResetCommand;
 import me.mister.jobs.listeners.JobListener;
 import me.mister.jobs.listeners.MenuListener;
 import org.bukkit.plugin.java.JavaPlugin;
