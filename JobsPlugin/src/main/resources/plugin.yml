@@ -7,9 +7,22 @@ author: Mister
 commands:
   job:
     description: Ouvre le menu des métiers
+
   jobhelp:
     description: Affiche l'aide des métiers
+
   jobstats:
     description: Affiche ton XP et ton niveau
+
   jobreset:
     description: Reset le niveau d’un métier
+    usage: /jobreset <joueur> <métier>
+
+  jobadmin:
+    description: Ouvre le menu d'administration des métiers
+    permission: jobs.admin
+
+permissions:
+  jobs.admin:
+    description: Permet d'accéder au menu admin des métiers
+    default: op

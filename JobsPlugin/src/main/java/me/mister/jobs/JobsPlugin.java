@@ -9,7 +9,8 @@ import me.mister.jobs.listeners.JobListener;
 import me.mister.jobs.listeners.MenuListener;
 import me.mister.jobs.listeners.AdminMenuListener;
 import me.mister.jobs.listeners.JobEditorListener;  
-import me.mister.jobs.listeners.BlockAddChatListener; 
+import me.mister.jobs.listeners.BlockAddChatListener;
+import me.mister.jobs.commands.JobAdminCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JobsPlugin extends JavaPlugin {
@@ -39,6 +40,8 @@ public class JobsPlugin extends JavaPlugin {
         getCommand("jobhelp").setExecutor(new JobHelpCommand());
         getCommand("jobstats").setExecutor(new JobStatsCommand());
         getCommand("jobreset").setExecutor(new JobResetCommand());
+        getCommand("jobadmin").setExecutor(new JobAdminCommand());
+
 
         getLogger().info("JobsPlugin activé avec succès !");
     }
