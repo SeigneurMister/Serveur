@@ -12,11 +12,13 @@ public class JobsPlugin extends JavaPlugin {
 
     private static JobsPlugin instance;
     private JobManager jobManager;
+    private BlockConfigManager blockConfigManager;
 
     @Override
     public void onEnable() {
         instance = this;
         jobManager = new JobManager();
+        blockConfigManager = new BlockConfigManager(this);
 
         getCommand("job").setExecutor(new JobCommand());
         getCommand("jobhelp").setExecutor(new JobHelpCommand());
@@ -32,8 +34,13 @@ public class JobsPlugin extends JavaPlugin {
     public static JobsPlugin getInstance() {
         return instance;
     }
-
+    
     public JobManager getJobManager() {
         return jobManager;
     }
+
+    public BlockConfigManager getBlockConfigManager() {
+        return blockConfigManager;
+    }
+
 }
