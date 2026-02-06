@@ -4,4 +4,5 @@ version: 1.0
 api-version: 1.21
 commands:
   job:
+
     description: Ouvre le menu des métiers
