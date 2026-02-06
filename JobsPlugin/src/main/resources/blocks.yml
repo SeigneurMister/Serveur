@@ -1,13 +1,13 @@
-mineur: 
-  STONE: 5 
-  COAL_ORE: 10 
-  IRON_ORE: 15 
-  
-bucheron: 
-  OAK_LOG: 5 
-  BIRCH_LOG: 5 
+mineur:
+  STONE: 5
+  COAL_ORE: 10
+  IRON_ORE: 15
 
-fermier: 
-  WHEAT: 3 
-  CARROTS: 3 
+bucheron:
+  OAK_LOG: 5
+  BIRCH_LOG: 5
+
+fermier:
+  WHEAT: 3
+  CARROTS: 3
   POTATOES: 3

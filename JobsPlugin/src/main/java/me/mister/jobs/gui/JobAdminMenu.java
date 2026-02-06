@@ -56,6 +56,7 @@ public class JobAdminMenu {
         inv.setItem(22, bucheron);
 
         // FERMIER
+        // FERMIER
         ItemStack fermier = new ItemStack(Material.DIAMOND_HOE);
         ItemMeta fMeta = fermier.getItemMeta();
         fMeta.setDisplayName("§eÉditer Fermier");
@@ -68,6 +69,7 @@ public class JobAdminMenu {
         fMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES); // ✔ IMPORTANT
         fermier.setItemMeta(fMeta);
         inv.setItem(24, fermier);
+
 
         // Bouton retour
         ItemStack back = new ItemStack(Material.ARROW);
