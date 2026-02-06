@@ -11,6 +11,6 @@ commands:
     description: Affiche l'aide des métiers
   jobstats:
     description: Affiche ton XP et ton niveau
-  jobreset:
-    description: Reset le niveau d’un métier pour un joueur
+  jobreset: 
+    description: Reset le niveau d’un métier
 

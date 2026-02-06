@@ -28,13 +28,14 @@ public class JobResetCommand implements CommandExecutor {
         try {
             job = Job.valueOf(args[1].toUpperCase());
         } catch (Exception e) {
-            sender.sendMessage("§cMétier invalide.");
+            sender.sendMessage("§cMétier invalide. Utilise : mineur, bucheron, fermier");
             return true;
         }
 
         JobsPlugin.getInstance().getJobManager().resetJob(target, job);
 
         sender.sendMessage("§aLe métier de §e" + target.getName() + " §aa été réinitialisé.");
+        target.sendMessage("§cTon métier §e" + job.name() + " §ca été réinitialisé !");
         return true;
     }
 }
