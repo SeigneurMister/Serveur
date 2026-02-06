@@ -27,7 +27,7 @@ public class JobEditorMenu {
             inv.setItem(i, glass);
         }
 
-        // Récupération des blocs du métier (clé YAML en minuscule)
+        // Récupération des blocs du métier
         List<String> blocks = JobsPlugin.getInstance().getBlockConfigManager().getBlocks(job);
 
         int slot = 10;
@@ -35,7 +35,9 @@ public class JobEditorMenu {
         for (String blockName : blocks) {
 
             Material mat = Material.matchMaterial(blockName);
-            if (mat == null) continue;
+
+            // ⭐ Correction Paper 1.21 : ignorer les matériaux qui ne sont pas des items
+            if (mat == null || !mat.isItem()) continue;
 
             int xp = JobsPlugin.getInstance().getBlockConfigManager().getXp(job, mat);
 
