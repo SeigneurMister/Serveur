@@ -32,7 +32,7 @@ public class JobMenu {
         ItemMeta bMeta = book.getItemMeta();
         bMeta.setDisplayName("§bInformations du plugin");
         bMeta.setLore(java.util.List.of(
-                "§7Plugin créé par §eMister",
+                "§7Plugin créé par §eTMD_Mister",
                 "§7Système de métiers personnalisé",
                 "",
                 "§bClique sur un métier pour le choisir"

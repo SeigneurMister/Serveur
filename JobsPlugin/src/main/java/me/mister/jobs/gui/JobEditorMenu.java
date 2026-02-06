@@ -17,17 +17,13 @@ public class JobEditorMenu {
 
         Inventory inv = Bukkit.createInventory(null, 54, "§bÉditeur : " + job.name());
 
-        // Fond bleu/cyan
         ItemStack glass = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
         ItemMeta gMeta = glass.getItemMeta();
         gMeta.setDisplayName(" ");
         glass.setItemMeta(gMeta);
 
-        for (int i = 0; i < 54; i++) {
-            inv.setItem(i, glass);
-        }
+        for (int i = 0; i < 54; i++) inv.setItem(i, glass);
 
-        // Récupération des blocs du métier
         List<String> blocks = JobsPlugin.getInstance().getBlockConfigManager().getBlocks(job);
 
         int slot = 10;
@@ -36,7 +32,6 @@ public class JobEditorMenu {
 
             Material mat = Material.matchMaterial(blockName);
 
-            // ⭐ Correction Paper 1.21 : ignorer les matériaux qui ne sont pas des items
             if (mat == null || !mat.isItem()) continue;
 
             int xp = JobsPlugin.getInstance().getBlockConfigManager().getXp(job, mat);
@@ -59,14 +54,12 @@ public class JobEditorMenu {
             if (slot == 17 || slot == 26 || slot == 35 || slot == 44) slot += 2;
         }
 
-        // Bouton ajouter un bloc
         ItemStack add = new ItemStack(Material.EMERALD_BLOCK);
         ItemMeta addMeta = add.getItemMeta();
         addMeta.setDisplayName("§aAjouter un bloc");
         add.setItemMeta(addMeta);
         inv.setItem(49, add);
 
-        // Bouton retour
         ItemStack back = new ItemStack(Material.ARROW);
         ItemMeta backMeta = back.getItemMeta();
         backMeta.setDisplayName("§cRetour");
