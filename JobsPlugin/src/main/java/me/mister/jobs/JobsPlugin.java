@@ -20,6 +20,7 @@ public class JobsPlugin extends JavaPlugin {
         getCommand("job").setExecutor(new JobCommand());
         getCommand("jobhelp").setExecutor(new JobHelpCommand());
         getCommand("jobstats").setExecutor(new JobStatsCommand(jobManager));
+        getCommand("jobreset").setExecutor(new JobResetCommand());
 
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new JobListener(), this);

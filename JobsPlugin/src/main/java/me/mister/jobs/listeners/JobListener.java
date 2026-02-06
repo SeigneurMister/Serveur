@@ -20,18 +20,20 @@ public class JobListener implements Listener {
 
         e.setExpToDrop(0);
 
+        int xpGain = 0;
+
         switch (job) {
 
             case MINEUR -> {
                 if (e.getBlock().getType().toString().contains("STONE") ||
                     e.getBlock().getType().toString().contains("ORE")) {
-                    JobsPlugin.getInstance().getJobManager().addXp(p, 10);
+                    xpGain = 10;
                 }
             }
 
             case BUCHERON -> {
                 if (e.getBlock().getType().toString().contains("LOG")) {
-                    JobsPlugin.getInstance().getJobManager().addXp(p, 10);
+                    xpGain = 10;
                 }
             }
 
@@ -39,9 +41,14 @@ public class JobListener implements Listener {
                 if (e.getBlock().getType() == Material.WHEAT ||
                     e.getBlock().getType() == Material.CARROTS ||
                     e.getBlock().getType() == Material.POTATOES) {
-                    JobsPlugin.getInstance().getJobManager().addXp(p, 10);
+                    xpGain = 10;
                 }
             }
+        }
+
+        if (xpGain > 0) {
+            JobsPlugin.getInstance().getJobManager().addXp(p, xpGain);
+            p.sendMessage("§a+" + xpGain + " XP");
         }
     }
 }
